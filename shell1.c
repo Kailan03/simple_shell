@@ -1,18 +1,5 @@
 #include "shell.h"
 
-#define _GNU_SOURCE
-#define BUFFER_SIZE 128
-#define REALLOC_INCREMENT 128
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-/* some function and prototype s here */
-
-#define BUFFER_SIZE 128
-#define REALLOC_INCREMENT 128
 int main(void);
 int main(void)
 {
@@ -57,31 +44,11 @@ int main(void)
 			/* continue; */
 		}
 
-		if (strcmp(args[0], "exit") == 0)
+		if (args[0] != NULL && strcmp(args[0], "exit") == 0)
 		{
-			if (i > 1)
-			{
-				int exit_status;
-
-				if (sscanf(args[1], "%d", &exit_status) == 1)
-				{
-					printf("Exiting the shell with status: %d\n", exit_status);
-					free(input);
-					exit(exit_status);
-				}
-				else
-				{
-					printf("Invalid exit status. Exiting the shell with status 1.\n");
-					free(input);
-					exit(1);
-				}
-			}
-			else
-			{
 				printf("Disconnecting...\n");
 				free(input);
 				exit(0);
-			}
 		}
 
 		if (strcmp(args[0], "env") == 0)

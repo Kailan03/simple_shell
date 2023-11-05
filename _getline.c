@@ -32,7 +32,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 									                  new_line = (char *)realloc(line, bufsize);
 											              if (new_line == NULL) {
 													                      free(line);
-															                      return -1;
+*lineptr == NULL;															      return -1;
 																	                  }
 												                  line = new_line;
 														          }
@@ -57,11 +57,11 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 									      }
 
 					      if (len == 0) {
-						              return -1; /* No characters read */
+	free(line);					              return -1; /* No characters read */
 							          }
 
 					          line[len] = '\0';
 						      *lineptr = line;
 						          *n = bufsize;
-							      return len;
-  }
+	return (len);
+}
