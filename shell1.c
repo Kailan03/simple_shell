@@ -67,6 +67,7 @@ int main(void)
 		if (pid == -1)
 		{
 			perror("fork");
+			free(input);
 			exit(1);
 		}
 		else if (pid == 0)
@@ -74,6 +75,7 @@ int main(void)
 			if (execve("/bin/ls", args, NULL) == -1)
 			{
 				perror("/bin/ls");
+				free(input);
 				exit(1);
 			}
 		}
