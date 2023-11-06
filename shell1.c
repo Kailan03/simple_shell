@@ -1,4 +1,9 @@
 #include "shell.h"
+/**
+ * main - Entry point
+ *
+ * Return: 0 for success
+ */
 
 int main(void);
 int main(void)
@@ -11,7 +16,7 @@ int main(void)
 	int i = 0;
 	char *token;
 	ssize_t read;
-	extern char **environ;
+	/*char **environ;*/
 	char **env;
 
 	while (1)
@@ -44,16 +49,16 @@ int main(void)
 			/* continue; */
 		}
 
-		if (args[0] != NULL && strcmp(args[0], "exit") == 0)
-		{
+			if (args[0] != NULL && strcmp(args[0], "exit") == 0)
+			{
 				printf("Disconnecting...\n");
 				free(input);
 				exit(0);
-		}
+			}
 
 		if (strcmp(args[0], "env") == 0)
 		{
-			env = environ;
+			/*env = environ;*/
 			while (*env)
 			{
 				printf("%s\n", *env);
@@ -82,6 +87,7 @@ int main(void)
 		else
 		{
 			int status;
+
 			waitpid(pid, &status, 0);
 		}
 	}
