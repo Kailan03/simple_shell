@@ -12,29 +12,33 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
 	char *line;
 	char *new_line;
+	static size_t buffer_len = 0;	
+	static size_t buffer_pos = 0;		      
+	static char buffer[BUFFER_SIZE];
+		          
+	size_t len = 0;
 	
-				      static size_t buffer_len = 0;
-			          static size_t buffer_pos = 0;
-			      static char buffer[BUFFER_SIZE];
-		          size_t len = 0;
-		      size_t bufsize = *n;
+	size_t bufsize = *n;
 
-	if (lineptr == NULL || n == NULL) {
-		              return -1;
-			          }
+	if (lineptr == NULL || n == NULL) 
+	{
+		return -1;
+	}	 
+	line = *lineptr;
 
-	          line = *lineptr;
-
-
-				          while (1) {
-						          if (len + 1 >= bufsize) {
-								              bufsize += REALLOC_INCREMENT;
-									                  new_line = (char *)realloc(line, bufsize);
-											              if (new_line == NULL) {
-													                      free(line);
-*lineptr = NULL;															      return -1;
-																	                  }
-												                  line = new_line;
+	while (1)
+	{
+		if (len + 1 >= bufsize)
+		{
+			bufsize += REALLOC_INCREMENT;
+			new_line = (char *)realloc(line, bufsize);
+			if (new_line == NULL)
+			{
+				free(line);
+				*lineptr = NULL;
+				return -1;
+			}
+											                  line = new_line;
 														          }
 							          if (buffer_pos == buffer_len) {
 									              buffer_len = read(fileno(stream), buffer, BUFFER_SIZE);
