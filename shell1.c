@@ -87,7 +87,7 @@ int main(void)
 		else
 		{
 			int status;
-
+			/* free(input); */
 			waitpid(pid, &status, 0);
 		}
 	}
