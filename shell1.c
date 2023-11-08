@@ -92,5 +92,6 @@ int main(void)
 		}
 	}
 	free(input);
+	free(env);
 	return (0);
 }
