@@ -12,37 +12,12 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
 	char *line;
-
-	char *new_line; 
-	size_t bufsize = *n;
-	size_t len = 0;
-	static char buffer[BUFFER_SIZE];
-	static size_t buffer_pos = 0;
-	static size_t buffer_len = 0;
-	
-	if (lineptr == NULL || n == NULL)
-        {
-                return (-1);
-        }
-	line = *lineptr;
-	while (1)
-	{
-		if (len + 1 >= bufsize) {
-		bufsize += REALLOC_INCREMENT;
-		new_line = (char *)realloc(line, bufsize);
-		if (new_line == NULL)
-		{
-			free(line);
-			return (-1);
-
-	/*char *new_line;
+	char *new_line;
 	static size_t buffer_len;
 	static size_t buffer_pos;
 	static char buffer[BUFFER_SIZE];
-
 	size_t len = 0;
-
-	size_t bufsize = *n;*/
+	size_t bufsize = *n;
 
 	if (lineptr == NULL || n == NULL)
 	{
@@ -90,7 +65,6 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 
 	if (len == 0)
 	{
-
 		line[len++] = buffer[buffer_pos++];
 		if (line[len - 1] == '\n')
 		{
@@ -100,21 +74,4 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 			return (len); /* Return the length of the line (excluding newline)*/
 		}
 	}
-}
-					      if (len == 0) {
-						              return (-1); /* No characters read*/
-							          }
-
-					          line[len] = '\0';
-						      *lineptr = line;
-						          *n = bufsize;
-							      return (len);
-  }
-		return (-1); /* No characters read*/
-	}
-
-	line[len] = '\0';
-	*lineptr = line;
-	*n = bufsize;
-	return (len);
 }
