@@ -16,19 +16,27 @@ int main(void)
 	int i = 0;
 	char *token;
 	ssize_t read;
-	/*char **environ;*/
 	char **env;
 
+	env = environ;
 	while (1)
 	{
-		printf("SimpleShell> ");
+		if (isatty(STDIN_FILENO)) /* Check if running in interactive mode */
+			printf("$ ");
 		fflush(stdout);
-		read = _getline(&input, &len, stdin);
+		read = getline(&input, &len, stdin);
 
 		if (read == -1)
 		{
-			printf("\n");
+			if (isatty(STDIN_FILENO))
+			{
+				printf("\n");
+			}
 			break;
+		}
+		if (input[0] == '\n' && (isatty(STDIN_FILENO)))
+		{
+			continue; /* don't process empty input */
 		}
 		input[strcspn(input, "\n")] = '\0';
 		token = strtok(input, " ");
@@ -37,17 +45,8 @@ int main(void)
 		{
 			args[i++] = token;
 			token = strtok(NULL, " ");
-
-			/* i++; */
 		}
 		args[i] = NULL;
-
-		if (i == 0)
-		{
-			printf("No command entered.\n");
-
-			/* continue; */
-		}
 
 			if (args[0] != NULL && strcmp(args[0], "exit") == 0)
 			{
@@ -58,7 +57,6 @@ int main(void)
 
 		if (strcmp(args[0], "env") == 0)
 		{
-			/*env = environ;*/
 			while (*env)
 			{
 				printf("%s\n", *env);
@@ -90,6 +88,7 @@ int main(void)
 			/* free(input); */
 			waitpid(pid, &status, 0);
 		}
+		i = 0;
 	}
 	free(input);
 	return (0);
