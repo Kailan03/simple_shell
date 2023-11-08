@@ -35,14 +35,14 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 			free(line);
 			return (-1);
 
-	char *new_line;
+	/*char *new_line;
 	static size_t buffer_len;
 	static size_t buffer_pos;
 	static char buffer[BUFFER_SIZE];
 
 	size_t len = 0;
 
-	size_t bufsize = *n;
+	size_t bufsize = *n;*/
 
 	if (lineptr == NULL || n == NULL)
 	{
