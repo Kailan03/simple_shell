@@ -74,4 +74,5 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 			return (len); /* Return the length of the line (excluding newline)*/
 		}
 	}
+	return (-1);
 }
