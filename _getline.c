@@ -67,8 +67,12 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	{
 		return (-1);
 	}
+<<<<<<< HEAD
 	line[len - 1] = '\0'; /* Null-terminate the line*/
 	*lineptr = line;
 	*n = bufsize;
 	return (len); /* Return the length of the line (excluding newline)*/
+=======
+	return (-1);
+>>>>>>> 6d3b0b9e111f200eb9d2d71c9acb4b79b5bd4811
 }
