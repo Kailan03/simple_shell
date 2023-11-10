@@ -24,7 +24,7 @@ int main(void)
 		if (isatty(STDIN_FILENO)) /* Check if running in interactive mode */
 			printf("$ ");
 		fflush(stdout);
-		read = _getline(&input, &len, stdin);
+		read = getline(&input, &len, stdin);
 
 		if (read == -1)
 		{
