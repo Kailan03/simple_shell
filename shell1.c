@@ -24,7 +24,7 @@ int main(void)
 		if (isatty(STDIN_FILENO)) /* Check if running in interactive mode */
 			printf("$ ");
 		fflush(stdout);
-		read = getline(&input, &len, stdin);
+		read = _getline(&input, &len, stdin);
 
 		if (read == -1)
 		{
@@ -39,12 +39,12 @@ int main(void)
 			continue; /* don't process empty input */
 		}
 		input[strcspn(input, "\n")] = '\0';
-		token = strtok(input, " ");
+		token = _strtok(input, " ");
 
 		while (token != NULL && i < 41)
 		{
 			args[i++] = token;
-			token = strtok(NULL, " ");
+			token = _strtok(NULL, " ");
 		}
 		args[i] = NULL;
 

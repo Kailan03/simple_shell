@@ -14,5 +14,6 @@
 /* some function and prototype s here */
 
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+char *_strtok(char *str, const char *delim);
 
 #endif
