@@ -17,14 +17,16 @@ int main(void)
 	char *token;
 	ssize_t read;
 	char **env;
+	char *lsPATH;
 
 	env = environ;
+	lsPATH = "/bin/ls";
 	while (1)
 	{
 		if (isatty(STDIN_FILENO)) /* Check if running in interactive mode */
 			printf("$ ");
 		fflush(stdout);
-		read = _getline(&input, &len, stdin);
+		read = getline(&input, &len, stdin);
 
 		if (read == -1)
 		{
@@ -47,6 +49,10 @@ int main(void)
 			token = _strtok(NULL, " ");
 		}
 		args[i] = NULL;
+		if (i == 0)
+		{
+			continue; /*no command entered */
+		}
 
 			if (args[0] != NULL && strcmp(args[0], "exit") == 0)
 			{
@@ -75,9 +81,18 @@ int main(void)
 		}
 		else if (pid == 0)
 		{
-			if (execve("/bin/ls", args, NULL) == -1)
+			if (access("/bin/ls", X_OK) == 0)
 			{
-				perror("/bin/ls");
+				if (execve(lsPATH, args, env) == -1)
+				{
+				perror("execve");
+				free(input);
+				exit(1);
+				}
+			}
+			else
+			{
+				write(2, "ls is not accessible\n", 22);
 				free(input);
 				exit(1);
 			}
