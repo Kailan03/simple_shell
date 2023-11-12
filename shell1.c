@@ -24,7 +24,7 @@ int main(void)
 		if (isatty(STDIN_FILENO)) /* Check if running in interactive mode */
 			printf("$ ");
 		fflush(stdout);
-		read = _getline(&input, &len, stdin);
+		read = getline(&input, &len, stdin);
 
 		if (read == -1)
 		{
@@ -50,6 +50,7 @@ int main(void)
 
 			if (args[0] != NULL && strcmp(args[0], "exit") == 0)
 			{
+				_exit_status(args, i);
 				printf("Disconnecting...\n");
 				free(input);
 				exit(0);
