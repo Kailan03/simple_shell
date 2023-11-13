@@ -1,10 +1,16 @@
 #include "shell.h"
+#include <linux/kernel.h>
+#include <linux/string.h>
 
 /**
- * exit_status - shell exiting with status code
+ * _exit_status - shell exiting with status code
+ * @args: arguments to handle
+ * @i: exit status code
  *
  * Return: nothing to return
  */
+
+extern char *__progname;
 
 void _exit_status(char *args[], int i)
 {
@@ -16,14 +22,17 @@ void _exit_status(char *args[], int i)
 		int exit_status;
 
 		if (sscanf(args[1], "%d", &exit_status) == 1)
+		/* if (kstrto32(args[1], 10, &exit_status) == 0) */
 		{
-			printf("Exiting the shell with status: %d\n", exit_status);
+		/* printf("Exiting the shell with status: %d\n", exit_status); */
 			free(input); /* Free allocated memory */
 			exit(exit_status); /* Terminate the shell with the specified status */
 		}
 		else
 		{
-			printf("Invalid exit status. Exiting the shell with status 1.\n");
+			perror(__progname);
+			fprintf(stderr, "%s: %d: exit: Illegal number: %s\n", __progname, i, args[1]);
+		/* printf("Invalid exit status. Exiting the shell with status 1.\n"); */
 			free(input); /* Free allocated memory */
 			exit(1); /* Default to exit with status 1 */
 		}

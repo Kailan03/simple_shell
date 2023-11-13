@@ -11,7 +11,6 @@ int main(void)
 	/* first */
 	char *input = NULL;
 	size_t len = 0;
-	pid_t pid;
 	char *args[42];
 	int i = 0;
 	char *token;
@@ -41,6 +40,15 @@ int main(void)
 			continue; /* don't process empty input */
 		}
 		input[strcspn(input, "\n")] = '\0';
+
+		/* check for pipe */
+		if (strchr(input, '|') != NULL)
+		{
+			_pipe(input, env, lsPATH);
+			continue;
+		}
+		/*.................*/
+
 		token = _strtok(input, " ");
 
 		while (token != NULL && i < 41)
@@ -57,7 +65,7 @@ int main(void)
 			if (args[0] != NULL && strcmp(args[0], "exit") == 0)
 			{
 				_exit_status(args, i);
-				printf("Disconnecting...\n");
+				/* printf("Disconnecting...\n"); */
 				free(input);
 				exit(0);
 			}
@@ -72,38 +80,8 @@ int main(void)
 			continue;
 		}
 
-		pid = fork();
+		executeCommand(args, env, lsPATH);
 
-		if (pid == -1)
-		{
-			perror("fork");
-			free(input);
-			exit(1);
-		}
-		else if (pid == 0)
-		{
-			if (access("/bin/ls", X_OK) == 0)
-			{
-				if (execve(lsPATH, args, env) == -1)
-				{
-				perror("execve");
-				free(input);
-				exit(1);
-				}
-			}
-			else
-			{
-				write(2, "ls is not accessible\n", 22);
-				free(input);
-				exit(1);
-			}
-		}
-		else
-		{
-			int status;
-			/* free(input); */
-			waitpid(pid, &status, 0);
-		}
 		i = 0;
 	}
 	free(input);
