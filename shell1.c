@@ -17,6 +17,7 @@ int main(void)
 	ssize_t read;
 	char **env;
 	char *lsPATH;
+	/* extern char **environ; */
 
 	env = environ;
 	lsPATH = "/bin/ls";
@@ -49,12 +50,12 @@ int main(void)
 		}
 		/*.................*/
 
-		token = _strtok(input, " ");
+		token = strtok(input, " ");
 
 		while (token != NULL && i < 41)
 		{
 			args[i++] = token;
-			token = _strtok(NULL, " ");
+			token = strtok(NULL, " ");
 		}
 		args[i] = NULL;
 		if (i == 0)
@@ -78,6 +79,24 @@ int main(void)
 				env++;
 			}
 			continue;
+		}
+
+		if (strcmp(args[0], "setenv") == 0)
+		{
+			if (_setenv(args) == 1)
+			{
+				free(input);
+				continue;
+			}
+		}
+
+		if (strcmp(args[0], "setenv") == 0)
+		{
+			if (_unsetenv(args) == 1)
+			{
+				free(input);
+				continue;
+			}
 		}
 
 		executeCommand(args, env, lsPATH);

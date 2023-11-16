@@ -9,10 +9,15 @@
 #include <stddef.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <linux/kernel.h>
-#include <linux/string.h>
+/* #include <linux/kernel.h> */
+/* #include <linux/string.h> */
+/* #include <linux/ctype.h> */
+
+extern char **environ;
+extern char *__progname;
 
 /* some function and prototype s here */
 
@@ -22,5 +27,8 @@ void _exit_status(char *args[], int i);
 void tokenize_command(char *cmd, char *args[]);
 void _pipe(char *input, char **env, char *lsPATH);
 void executeCommand(char *args[], char **env, char *lsPATH);
+int _setenv(char *args[]);
+int _unsetenv(char *args[]);
+
 
 #endif

@@ -11,6 +11,7 @@ void executeCommand(char *args[], char **env, char *lsPATH)
 {
 	pid_t pid = fork();
 	char *input = NULL;
+	int i;
 
 	if (pid == -1)
 	{
@@ -20,6 +21,21 @@ void executeCommand(char *args[], char **env, char *lsPATH)
 	}
 	else if (pid == 0)
 	{
+		if (strcmp(args[0], "echo") == 0)
+		{
+			for (i = 1; args[i] != NULL; i++)
+			{
+				printf("%s", args[i]);
+				if (args[i + 1] != NULL)
+				{
+					printf(" ");
+				}
+			}
+			printf("\n");
+			free(input);
+			exit(0);
+		}
+
 		if (access("/bin/ls", X_OK) == 0)
 		{
 			if (execve(lsPATH, args, env) == -1)
