@@ -7,6 +7,7 @@
  *
  * Return: nothing
  */
+void executeCommand(char *args[], char **env, char *lsPATH);
 void executeCommand(char *args[], char **env, char *lsPATH)
 {
 	pid_t pid = fork();
