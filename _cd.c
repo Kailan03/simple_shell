@@ -74,5 +74,5 @@ int _cd(char *args[])
 
 	free(currentDir);
 	free(newDir);
-	return(0);
+	return (0);
 }
