@@ -99,6 +99,16 @@ int main(void)
 			}
 		}
 
+		if (strcmp(args[0], "cd") == 0)
+		{
+			if (_cd(args) == 1)
+			{
+				/* Error occurred */
+				free(input);
+				continue;
+			}
+		}
+
 		executeCommand(args, env, lsPATH);
 
 		i = 0;

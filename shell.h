@@ -28,6 +28,7 @@ void tokenize_command(char *cmd, char *args[]);
 void _pipe(char *input, char **env, char *lsPATH);
 void executeCommand(char *args[], char **env, char *lsPATH);
 int _setenv(char *args[]);
+int _cd(char *args[]); 
 int _unsetenv(char *args[]);
 
 
